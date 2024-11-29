@@ -11,7 +11,7 @@ class AuthController extends GetxController {
     isLoading.value = false;
 
     if (result == null) {
-      Get.offAllNamed('/daily');
+      Get.offAllNamed('/home');
     } else {
       Get.snackbar('Error', result);
     }

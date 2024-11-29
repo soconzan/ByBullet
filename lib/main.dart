@@ -50,7 +50,7 @@ class InitialScreen extends StatelessWidget {
         }
 
         if (snapshot.hasData && snapshot.data != null) {
-          Future.microtask(() => Get.offNamed('/daily'));
+          Future.microtask(() => Get.offNamed('/home'));
         } else {
           Future.microtask(() => Get.offNamed('/login'));
         }

@@ -75,7 +75,7 @@ class LoginPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.0),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: AppColors.black.withOpacity(0.05),
                     blurRadius: 5,
                   ),
                 ],
@@ -94,6 +94,7 @@ class LoginPage extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
 
+            // Login Btn
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.black,
