@@ -7,6 +7,8 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.white,
     canvasColor: AppColors.white,
     fontFamily: 'Pretendard',
+
+    // App Bar
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.white,
       iconTheme: IconThemeData(color: AppColors.black),
@@ -15,7 +17,25 @@ class AppTheme {
         fontWeight: FontWeight.bold,
       ),
     ),
+
+    // Toggle
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          return AppColors.white; // 활성화된 상태의 thumb 색상
+        }
+        return AppColors.white; // 비활성화된 상태의 thumb 색상
+      }),
+      trackColor: MaterialStateProperty.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          return AppColors.black; // 활성화된 상태의 track 색상
+        }
+        return AppColors.mediumGray; // 비활성화된 상태의 track 색상
+      }),
+      trackOutlineColor: MaterialStateProperty.all(Colors.transparent)
+    ),
   );
+
 
   static ThemeData darkTheme = ThemeData(
     primaryColor: AppColors.white,

@@ -81,7 +81,7 @@ class DailyAppBar extends StatelessWidget implements PreferredSizeWidget {
             // current view date
             Obx(
               () => Text(
-                '${DateFormat('yyyy년 MM월').format(dailyController.currentDate.value)}',
+                '${DateFormat('yyyy년 M월').format(dailyController.currentDate.value)}',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,

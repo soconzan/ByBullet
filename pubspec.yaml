@@ -50,6 +50,8 @@ flutter:
   assets:
     - lib/assets/icons/write_icon.svg
     - lib/assets/icons/enter_icon.svg
+    - lib/assets/icons/check_icon.svg
+    - lib/assets/icons/calendar_icon.svg
     - lib/assets/icons/task_bullet.svg
     - lib/assets/icons/completed_bullet.svg
     - lib/assets/icons/priority_bullet.svg
