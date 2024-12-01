@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 class TaskInputController extends GetxController {
   final DailyController dailyController = Get.find<DailyController>();
+  final FocusNode focusNode = FocusNode();
 
   var isTextEmpty = true.obs;
   var selectedBullet = "task".obs;
@@ -15,7 +16,15 @@ class TaskInputController extends GetxController {
   var isAllDay = true.obs;
   var isDialogVisible = false.obs;
 
-  final FocusNode focusNode = FocusNode();
+  @override
+  void onInit() {
+    super.onInit();
+
+    ever(dailyController.currentDate, (date) {
+      selectedDate.value = date as DateTime;
+    });
+  }
+
 
   // save Task
   Future<void> saveTask(TextEditingController textController) async {

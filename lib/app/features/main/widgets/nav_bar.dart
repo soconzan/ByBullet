@@ -52,6 +52,7 @@ class NavBar extends StatelessWidget {
               child: Text(
                 label,
                 style: TextStyle(
+                  fontWeight: FontWeight.w600,
                   color: navBarController.selectedIndex.value == index
                       ? AppColors.black
                       : AppColors.mediumGray,

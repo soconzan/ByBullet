@@ -43,7 +43,8 @@ class LoginPage extends StatelessWidget {
 
             // ID
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
               decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(20.0),
@@ -69,7 +70,8 @@ class LoginPage extends StatelessWidget {
 
             // PW
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
               decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(20.0),
@@ -95,26 +97,73 @@ class LoginPage extends StatelessWidget {
             SizedBox(height: 10.0),
 
             // Login Btn
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.black,
-                foregroundColor: AppColors.white,
-                minimumSize: Size(double.infinity, 0),
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-                textStyle: TextStyle(fontSize: 16),
-              ),
-              onPressed: () {
+            GestureDetector(
+              onTap: () {
                 authController.login(
                     emailController.text, passwordController.text);
               },
-              child: Text('로그인'),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 15.0),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.black,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: Center(
+                  child: Text(
+                    '로그인',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+
+            // Google Login Btn
+            GestureDetector(
+              onTap: () {
+                authController.loginWithGoogle();
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 15.0),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                  border: Border.all(color: AppColors.black, width: 1.0),
+                ),
+                child: Center(
+                  child: Text(
+                    '구글 계정으로 로그인',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppColors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
             ),
             SizedBox(
               height: 20.0,
             ),
+
             TextButton(
-                onPressed: () => Get.toNamed('/signup'),
-                child: Text('회원가입')
+              onPressed: () => Get.toNamed('/signup'),
+              style: TextButton.styleFrom(
+                foregroundColor: AppColors.black,
+              ),
+              child: Text(
+                '회원가입',
+              ),
             ),
           ],
         ),

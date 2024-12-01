@@ -68,20 +68,35 @@ class DateSelectorDialogWidget extends StatelessWidget {
                       SizedBox(height: 15),
 
                       // All day Toggle
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("All Day"),
-                          Obx(
-                            () => Switch(
-                              value: taskInputController.isAllDay.value,
-                              onChanged: (value) {
-                                taskInputController.toggleAllDay(value);
-                              },
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Obx(
+                              () => Text(
+                                "하루종일",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: taskInputController.isAllDay.value
+                                      ? AppColors.black
+                                      : AppColors.mediumGray,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                            Obx(
+                              () => Switch(
+                                value: taskInputController.isAllDay.value,
+                                onChanged: (value) {
+                                  taskInputController.toggleAllDay(value);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+
                       SizedBox(height: 16),
 
                       // Time Display & Picker
@@ -89,13 +104,16 @@ class DateSelectorDialogWidget extends StatelessWidget {
                         if (!taskInputController.isAllDay.value) {
                           return TimePickerSpinner(
                             is24HourMode: true,
-                            normalTextStyle: TextStyle(fontSize: 16, color: Colors.grey),
-                            highlightedTextStyle: TextStyle(fontSize: 20, color: Colors.black),
+                            normalTextStyle:
+                                TextStyle(fontSize: 16, color: Colors.grey),
+                            highlightedTextStyle:
+                                TextStyle(fontSize: 20, color: Colors.black),
                             spacing: 50,
                             itemHeight: 40,
                             isForce2Digits: true,
                             onTimeChange: (time) {
-                              taskInputController.selectTime(TimeOfDay.fromDateTime(time));
+                              taskInputController
+                                  .selectTime(TimeOfDay.fromDateTime(time));
                             },
                           );
                         } else {
@@ -104,15 +122,15 @@ class DateSelectorDialogWidget extends StatelessWidget {
                       }),
 
                       // Confirm
-                      GestureDetector(
-                        onTap: () =>
-                            {taskInputController.isDialogVisible.value = false},
-                        child: SvgPicture.asset(
-                          'lib/assets/icons/check_icon.svg',
-                          color: AppColors.black,
-                          width: 20,
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () =>
+                      //       {taskInputController.isDialogVisible.value = false},
+                      //   child: SvgPicture.asset(
+                      //     'lib/assets/icons/check_icon.svg',
+                      //     color: AppColors.black,
+                      //     width: 20,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

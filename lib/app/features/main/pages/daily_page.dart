@@ -1,3 +1,4 @@
+import 'package:bybullet/app/features/main/widgets/weekly_calendar_with_tasks.dart';
 import 'package:bybullet/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,9 +37,9 @@ class DailyPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // mini dialog
-            Text('여긴 달력들어갈 자리'),
+            WeeklyCalendarWithTasks(),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
 
             // task list
@@ -55,66 +56,53 @@ class DailyPage extends StatelessWidget {
   }
 
   Widget _buildTaskList() {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: dailyController.tasks.length,
-      itemBuilder: (context, index) {
-        final task = dailyController.tasks[index];
-        final isCanceled = task["isCanceled"] as bool;
-        final time = task["time"];
-        final bulletIcon = "lib/assets/icons/${task["bullet"]}_bullet.svg";
+    return Expanded(
+      child: Obx(() {
+        final tasks = dailyController.tasks;
+        return ListView.builder(
+          itemCount: tasks.length,
+          itemBuilder: (context, index) {
+            final task = tasks[index];
+            final bulletIcon = "lib/assets/icons/${task.bullet}_bullet.svg";
 
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 8),
-          child: IntrinsicWidth(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Bullet icon
-                SvgPicture.asset(
-                  bulletIcon,
-                  color: isCanceled ? AppColors.mediumGray : AppColors.black,
-                  width: 12,
-                ),
-                SizedBox(width: 10),
-
-                // time
-                if (time != null)
-                  Text(
-                    time,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: isCanceled
-                          ? AppColors.mediumGray
-                          : AppColors.darkGray,
-                      fontWeight: FontWeight.w300,
+            return GestureDetector(
+              onTap: task.bullet == "task" || task.bullet == "completed"
+                  ? () => dailyController.toggleTaskBullet(task.id, task.bullet)
+                  : null,
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Bullet icon
+                    SvgPicture.asset(
+                      bulletIcon,
+                      color: task.isCanceled ? AppColors.mediumGray : AppColors.black,
+                      width: 12,
                     ),
-                  ),
-                if (time != null) SizedBox(width: 5),
+                    SizedBox(width: 10),
 
-                // text
-                Expanded(
-                  child: Text(
-                    task["text"],
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: isCanceled ? FontWeight.w400 : FontWeight.w500,
-                      color:
-                          isCanceled ? AppColors.mediumGray : AppColors.black,
-                      decoration: isCanceled
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
-                      decorationColor: AppColors.mediumGray,
+                    // Task text
+                    Expanded(
+                      child: Text(
+                        task.text,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: task.isCanceled ? AppColors.mediumGray : AppColors.black,
+                          decoration: task.isCanceled ? TextDecoration.lineThrough : null,
+                          decorationColor: AppColors.mediumGray,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         );
-      },
+      }),
     );
   }
+
+
 }

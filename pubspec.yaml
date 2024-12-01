@@ -21,6 +21,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   firebase_core: ^3.7.0
   firebase_auth: ^5.3.3
+  google_sign_in: ^6.2.2
   cloud_firestore: ^5.5.0
   intl: ^0.19.0
   table_calendar: ^3.1.2
@@ -42,6 +43,7 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
   flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.2.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -87,4 +89,10 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "lib/assets/fonts/app_logo.png"
+  image_path: "lib/assets/icons/app_logo.png"
+
+flutter_native_splash:
+  color: "#F9F9F9"
+  image: lib/assets/icons/splash_icon.png
+  android: true
+  ios: true

@@ -52,39 +52,50 @@ class DailyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 SizedBox(width: 5),
 
                 // title
-                Obx(
-                  () => Text(
-                    dailyController.currentTitle,
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w700,
+                GestureDetector(
+                  onTap: () {
+                    dailyController.currentDate.value = DateTime.now(); // currentDate를 오늘 날짜로 재설정
+                  },
+                  child: Obx(
+                        () => Text(
+                      dailyController.currentTitle,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
+
                 SizedBox(width: 15),
 
                 // tasks number
-                Obx(
-                  () => Wrap(
-                    direction: Axis.horizontal,
-                    spacing: 5,
-                    children: [
-                      _buildTaskInfo('lib/assets/icons/task_bullet.svg', dailyController.taskCount.value),
-                      _buildTaskInfo('lib/assets/icons/priority_bullet.svg', dailyController.priorityCount.value),
-                      _buildTaskInfo('lib/assets/icons/memo_bullet.svg', dailyController.memoCount.value),
-                    ],
-                  ),
-                ),
+                // Obx(
+                //   () => Wrap(
+                //     direction: Axis.horizontal,
+                //     spacing: 5,
+                //     children: [
+                //       _buildTaskInfo('lib/assets/icons/task_bullet.svg', dailyController.taskCount.value),
+                //       _buildTaskInfo('lib/assets/icons/priority_bullet.svg', dailyController.priorityCount.value),
+                //       _buildTaskInfo('lib/assets/icons/memo_bullet.svg', dailyController.memoCount.value),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
 
             // current view date
-            Obx(
-              () => Text(
-                '${DateFormat('yyyy년 M월').format(dailyController.currentDate.value)}',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+            GestureDetector(
+              onTap: () {
+                dailyController.currentDate.value = DateTime.now(); // currentDate를 오늘 날짜로 재설정
+              },
+              child: Obx(
+                    () => Text(
+                  '${DateFormat('yyyy년 M월').format(dailyController.currentDate.value)}',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),

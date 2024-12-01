@@ -1,8 +1,8 @@
 import 'package:bybullet/app/services/firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
-
   static final AuthService _instance = AuthService._internal();
 
   factory AuthService() {
@@ -65,6 +65,45 @@ class AuthService {
       return e.message;
     } catch (e) {
       print(e);
+    }
+  }
+
+  // Google Signin
+  static Future<String?> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        return null;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        await FirestoreService.saveUser(user.uid, {
+          'name': user.displayName ?? 'Unknown',
+          'email': user.email ?? 'No email',
+          'photoURL': user.photoURL ?? '',
+          'uid': user.uid,
+          'loginType': 'google',
+          'lastLogin': DateTime.now(),
+        });
+      }
+
+      return null;
+    } catch (e) {
+      print('Error google login: $e');
+      return 'Failure google login: $e';
     }
   }
 }
