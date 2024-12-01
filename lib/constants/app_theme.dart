@@ -8,6 +8,15 @@ class AppTheme {
     canvasColor: AppColors.white,
     fontFamily: 'Pretendard',
 
+    // Text Theme
+    textTheme: TextTheme(
+      bodyLarge: TextStyle(color: AppColors.black),
+      bodyMedium: TextStyle(color: AppColors.black),
+      displayLarge: TextStyle(color: AppColors.black, fontWeight: FontWeight.w600),
+      displayMedium: TextStyle(color: AppColors.black),
+      bodySmall: TextStyle(color: AppColors.mediumGray),
+    ),
+
     // App Bar
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.white,
@@ -42,6 +51,16 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.black,
     canvasColor: AppColors.black,
     fontFamily: 'Pretendard',
+
+    // Text Theme
+    textTheme: TextTheme(
+      bodyLarge: TextStyle(color: AppColors.white),
+      bodyMedium: TextStyle(color: AppColors.white),
+      displayLarge: TextStyle(color: AppColors.white, fontWeight: FontWeight.w600),
+      displayMedium: TextStyle(color: AppColors.white),
+      bodySmall: TextStyle(color: AppColors.mediumGray),
+    ),
+
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.black,
       iconTheme: IconThemeData(color: AppColors.white),

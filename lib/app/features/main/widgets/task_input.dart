@@ -14,24 +14,12 @@ class TaskInputWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //   return Obx(() {
-    //     if (navBarController.isTaskInputVisible.value) {
-    //       return _taskInputItem();
-    //     }
-    //     return SizedBox.shrink();
-    //   });
-    // }
-    //
-    // Widget _taskInputItem() {
     final TextEditingController textController = TextEditingController();
 
     textController.addListener(() {
       taskInputController.isTextEmpty.value =
           textController.text.trim().isEmpty;
     });
-
-    String? selectBullet = "task";
-    DateTime selectedDate = DateTime.now();
 
     return GestureDetector(
       // close gesture

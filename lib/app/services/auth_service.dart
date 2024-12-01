@@ -1,9 +1,29 @@
+import 'package:bybullet/app/services/firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthService {
+
+  static final AuthService _instance = AuthService._internal();
+
+  factory AuthService() {
+    return _instance;
+  }
+
+  AuthService._internal();
+
+  static User? _currentUser;
+
+  static User? get currentUser {
+    _currentUser ??= _auth.currentUser;
+    return _currentUser;
+  }
+
+  static Future<void> signOut() async {
+    await _auth.signOut();
+    _currentUser = null;
+  }
+
   static final FirebaseAuth _auth = FirebaseAuth.instance;
-  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   static Future<String?> signInWithEmailAndPassword(
       String email, String password) async {
@@ -30,7 +50,7 @@ class AuthService {
         password: password,
       );
 
-      await _firestore.collection('users').doc(credential.user!.uid).set({
+      await FirestoreService.saveUser(credential.user!.uid, {
         'name': name,
         'uid': credential.user!.uid,
       });
