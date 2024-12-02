@@ -19,27 +19,27 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Logo
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.star,
-                  size: 40,
-                  color: AppColors.black,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  'bybullet*',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.black,
-                  ),
-                )
-              ],
-            ),
+            // Column(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Icon(
+            //       Icons.star,
+            //       size: 40,
+            //       color: AppColors.black,
+            //     ),
+            //     SizedBox(
+            //       width: 8,
+            //     ),
+            //     Text(
+            //       'bybullet*',
+            //       style: TextStyle(
+            //         fontSize: 24,
+            //         fontWeight: FontWeight.bold,
+            //         color: AppColors.black,
+            //       ),
+            //     )
+            //   ],
+            // ),
 
             // ID
             Container(
@@ -50,7 +50,7 @@ class LoginPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.0),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withOpacity(0.1),
                     blurRadius: 5,
                   ),
                 ],
@@ -77,7 +77,7 @@ class LoginPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.0),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.black.withOpacity(0.05),
+                    color: AppColors.black.withOpacity(0.1),
                     blurRadius: 5,
                   ),
                 ],

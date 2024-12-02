@@ -65,6 +65,7 @@ class TaskInputWidget extends StatelessWidget {
                       ),
                       onSubmitted: (value) {
                         taskInputController.saveTask(textController);
+                        taskInputController.isAllDay.value = true;
                       },
                     ),
                     SizedBox(
@@ -98,6 +99,7 @@ class TaskInputWidget extends StatelessWidget {
                           () => GestureDetector(
                             onTap: () {
                               taskInputController.saveTask(textController);
+                              taskInputController.isAllDay.value = true;
                             },
                             child: SvgPicture.asset(
                               'lib/assets/icons/enter_icon.svg',

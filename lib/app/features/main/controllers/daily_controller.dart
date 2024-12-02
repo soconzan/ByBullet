@@ -110,28 +110,28 @@ class DailyController extends GetxController {
     }
   }
 
-  // var swipedIndex = Rxn<int>();
-  //
-  // void resetSwipedIndex() {
-  //   swipedIndex.value = null;
-  // }
-  //
-  // void setSwipedIndex(int index) {
-  //   swipedIndex.value = index;
-  // }
-
-  var swipedIndex = (-1).obs;
-  var isRightSwipe = false.obs;
-
-  void setSwipedIndex(int index, bool isRight) {
-    swipedIndex.value = index;
-    isRightSwipe.value = isRight;
-  }
+  var swipedIndex = Rxn<int>();
 
   void resetSwipedIndex() {
-    swipedIndex.value = -1;
-    isRightSwipe.value = false;
+    swipedIndex.value = null;
   }
+
+  void setSwipedIndex(int index) {
+    swipedIndex.value = index;
+  }
+
+  // var swipedIndex = (-1).obs;
+  // var isRightSwipe = false.obs;
+  //
+  // void setSwipedIndex(int index, bool isRight) {
+  //   swipedIndex.value = index;
+  //   isRightSwipe.value = isRight;
+  // }
+  //
+  // void resetSwipedIndex() {
+  //   swipedIndex.value = -1;
+  //   isRightSwipe.value = false;
+  // }
 
   Future<void> migrateTask(String taskId, String currentDate) async {
     try {
@@ -176,6 +176,7 @@ class DailyController extends GetxController {
     try {
       await FirestoreService.deleteTask(taskId);
       await fetchTasks();
+      fetchWeeklySummaries();
     } catch (e) {
       print("Error deleting task: $e");
     }

@@ -45,6 +45,7 @@ class NavBar extends StatelessWidget {
       onTap: () {
         navBarController.selectedIndex.value = index;
         navBarController.isTaskInputVisible.value = false;
+        taskInputController.isAllDay.value = true;
       },
       child: Obx(() => Container(
             width: 50.0,
