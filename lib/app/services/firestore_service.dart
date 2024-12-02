@@ -102,6 +102,27 @@ class FirestoreService {
     }
   }
 
+  // Delete task
+  static Future<void> deleteTask(String taskId) async {
+    final currentUser = AuthService.currentUser;
+    if (currentUser == null) throw Exception("User not logged in");
+
+    final uid = currentUser.uid;
+
+    try {
+      await _firestore
+          .collection("users")
+          .doc(uid)
+          .collection("tasks")
+          .doc(taskId)
+          .delete();
+    } catch (e) {
+      throw Exception("Error deleting task: $e");
+    }
+  }
+
+
+
   // Fetch task counts
   static Future<Map<String, int>> fetchTaskCounts(DateTime date) async {
     final currentUser = AuthService.currentUser;
@@ -170,6 +191,9 @@ class FirestoreService {
       for (var doc in snapshot.docs) {
         final data = doc.data();
         final date = data["date"] as String? ?? "";
+
+        final isCanceled = data["isCanceled"] as bool? ?? false;
+        if (isCanceled) continue;
 
         if (!summaryMap.containsKey(date)) {
           summaryMap[date] = {"taskCount": 0, "completedCount": 0};

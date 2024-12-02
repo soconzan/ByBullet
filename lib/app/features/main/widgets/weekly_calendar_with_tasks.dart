@@ -14,6 +14,7 @@ class WeeklyCalendarWithTasks extends StatelessWidget {
     dailyController.fetchWeeklySummaries();
 
     return Obx(() {
+      final today = DateTime.now();
       final startOfWeek =
           dailyController.currentDate.value.subtract(Duration(days: 3));
       final days =
@@ -24,11 +25,14 @@ class WeeklyCalendarWithTasks extends StatelessWidget {
         children: days.map((date) {
           final formattedDate = DateFormat('yyyy-MM-dd').format(date);
           final summary = dailyController.weeklySummaries.firstWhere(
-                (summary) => summary.date == formattedDate,
-            orElse: () => DailyTaskSummary(date: formattedDate, taskCount: 0, completedCount: 0),
+            (summary) => summary.date == formattedDate,
+            orElse: () => DailyTaskSummary(
+                date: formattedDate, taskCount: 0, completedCount: 0),
           );
 
-          final isSelected = dailyController.isSameDate(date, dailyController.currentDate.value);
+          final isToday = dailyController.isSameDate(date, today);
+          final isSelected = dailyController.isSameDate(
+              date, dailyController.currentDate.value);
           final taskCount = summary.taskCount + summary.completedCount;
 
           return GestureDetector(
@@ -52,9 +56,10 @@ class WeeklyCalendarWithTasks extends StatelessWidget {
                   width: 20,
                   height: 20,
                   decoration: BoxDecoration(
-                    color: (summary.taskCount == 0 && summary.completedCount > 0)
-                        ? AppColors.black
-                        : AppColors.mediumGray,
+                    color:
+                        (summary.taskCount == 0 && summary.completedCount > 0)
+                            ? AppColors.black
+                            : AppColors.mediumGray,
                     borderRadius: BorderRadius.circular(7),
                   ),
                   child: Center(
@@ -74,7 +79,11 @@ class WeeklyCalendarWithTasks extends StatelessWidget {
                   width: 20,
                   height: 20,
                   decoration: BoxDecoration(
-                    color: isSelected ? AppColors.black : Colors.transparent,
+                    color: isSelected
+                        ? AppColors.black
+                        : isToday
+                            ? AppColors.mediumGray
+                            : Colors.transparent,
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -82,8 +91,11 @@ class WeeklyCalendarWithTasks extends StatelessWidget {
                       "${date.day}",
                       style: TextStyle(
                         fontSize: 12,
-                        color:
-                            isSelected ? AppColors.white : AppColors.darkGray,
+                        color: isSelected
+                            ? AppColors.white
+                            : isToday
+                            ? AppColors.black
+                            : AppColors.darkGray,
                       ),
                     ),
                   ),

@@ -9,6 +9,7 @@ class DailyController extends GetxController {
   var currentDate = DateTime.now().obs;
   var tasks = <Task>[].obs;
   var weeklySummaries = <DailyTaskSummary>[].obs;
+  var isTaskEditVisible = false.obs;
 
   var taskCount = 0.obs;
   var completedCount = 0.obs;
@@ -55,14 +56,14 @@ class DailyController extends GetxController {
         final timeA = a.time ?? "";
         final timeB = b.time ?? "";
 
+        if (a.isCanceled && !b.isCanceled) return 1;
+        if (!a.isCanceled && b.isCanceled) return -1;
+
         if (timeA.isNotEmpty && timeB.isNotEmpty) {
           return timeA.compareTo(timeB);
         }
         if (timeA.isNotEmpty) return -1;
         if (timeB.isNotEmpty) return 1;
-
-        if (a.isCanceled && !b.isCanceled) return 1;
-        if (!a.isCanceled && b.isCanceled) return -1;
 
         return a.createdAt.compareTo(b.createdAt);
       });
@@ -106,6 +107,77 @@ class DailyController extends GetxController {
       fetchWeeklySummaries();
     } catch (e) {
       print("Error updating bullet: $e");
+    }
+  }
+
+  // var swipedIndex = Rxn<int>();
+  //
+  // void resetSwipedIndex() {
+  //   swipedIndex.value = null;
+  // }
+  //
+  // void setSwipedIndex(int index) {
+  //   swipedIndex.value = index;
+  // }
+
+  var swipedIndex = (-1).obs;
+  var isRightSwipe = false.obs;
+
+  void setSwipedIndex(int index, bool isRight) {
+    swipedIndex.value = index;
+    isRightSwipe.value = isRight;
+  }
+
+  void resetSwipedIndex() {
+    swipedIndex.value = -1;
+    isRightSwipe.value = false;
+  }
+
+  Future<void> migrateTask(String taskId, String currentDate) async {
+    try {
+      final date = DateFormat('yyyy-MM-dd').parse(currentDate);
+      final updatedDate = date.add(Duration(days: 1));
+      final newDateString = DateFormat('yyyy-MM-dd').format(updatedDate);
+
+      await FirestoreService.updateTask(taskId, {"date": newDateString});
+
+      fetchTasks();
+      fetchWeeklySummaries();
+    } catch (e) {
+      print("Error updating task date: $e");
+    }
+  }
+
+  Future<void> toggleTaskCanceled(String taskId) async {
+    try {
+      final task = tasks.firstWhere((t) => t.id == taskId);
+      final newIsCanceled = !task.isCanceled;
+
+      await FirestoreService.updateTask(taskId, {
+        "isCanceled": newIsCanceled,
+      });
+
+      fetchTasks();
+      fetchWeeklySummaries();
+    } catch (e) {
+      print("Error toggling task cancel state: $e");
+    }
+  }
+
+  // Future<void> toggleTaskCanceled(String taskId) async {
+  //   final task = tasks.firstWhere((t) => t.id == taskId);
+  //   final newState = !task.isCanceled;
+  //   // Update task in Firestore
+  //   await FirestoreService.updateTask(taskId, {"isCanceled": newState});
+  // }
+
+
+  Future<void> deleteTask(String taskId) async {
+    try {
+      await FirestoreService.deleteTask(taskId);
+      await fetchTasks();
+    } catch (e) {
+      print("Error deleting task: $e");
     }
   }
 }
